@@ -1,0 +1,15 @@
+.Layout {
+    width: 100%;
+}
+
+.Header {
+    position: fixed;
+    top: 0;
+    height: 50px;
+    width: 100%;
+    background-color: rgb(211, 252, 184);
+}
+
+.Main {
+    margin-top: 50px;
+}
