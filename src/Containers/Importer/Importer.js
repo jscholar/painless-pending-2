@@ -6,18 +6,41 @@ class Importer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            method: "upload-file",
         }
+        this.changeMethod = this.changeMethod.bind(this);
+    }
+
+    changeMethod(event) {
+        this.setState({
+            method: event.target.value
+        })
     }
 
     render() {
+
+
         return (
             <div className={classes.Importer}>
-                <div className={classes.InputArea}>
-                    <h1>Upload New</h1>
-                    <h2>Upload file</h2>
-                    <h2>Paste textfield</h2>
+                <div className={classes.Input}>
+                    <div className={classes.Options}>
+                        <input
+                            value="upload-file"
+                            checked={this.state.method === "upload-file"}
+                            type="radio"
+                            onChange={this.changeMethod}></input>
+                        <label>Upload file</label>
+                        <input
+                            value="copy-text"
+                            checked={this.state.method === "copy-text"}
+                            type="radio"
+                            onChange={this.changeMethod}></input>
+                        <label>Copy Text</label>
+                    </div>
+                    <div className={classes.InputArea}>
+                    </div>
                 </div>
+
                 <div className={classes.ToBeUpdated}>
                     <h1>Pendings to update</h1>
                 </div>
