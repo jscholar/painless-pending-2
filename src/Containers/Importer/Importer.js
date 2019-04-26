@@ -1,48 +1,50 @@
 import React from 'react';
 
 import classes from './Importer.module.css'
-
+import parseInput from './parseInput/parseInput';
 class Importer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            method: "upload-file",
+            fileUpload: false,
+            inputText: '',
+            checkingPayload: false,
+            payload: {}
         }
-        this.changeMethod = this.changeMethod.bind(this);
+        this.handleSumbit = this.handleSumbit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    changeMethod(event) {
+    handleChange(event) {
         this.setState({
-            method: event.target.value
+            inputText: event.target.value
         })
+    }
+
+    handleSumbit(event) {
+        event.preventDefault();
+        const newPendings = parseInput(this.state.inputText);
+        console.log(newPendings);
     }
 
     render() {
 
-
         return (
             <div className={classes.Importer}>
-                <div className={classes.Input}>
-                    <div className={classes.Options}>
-                        <input
-                            value="upload-file"
-                            checked={this.state.method === "upload-file"}
-                            type="radio"
-                            onChange={this.changeMethod}></input>
-                        <label>Upload file</label>
-                        <input
-                            value="copy-text"
-                            checked={this.state.method === "copy-text"}
-                            type="radio"
-                            onChange={this.changeMethod}></input>
-                        <label>Copy Text</label>
-                    </div>
-                    <div className={classes.InputArea}>
-                    </div>
+                <div className={classes.InputArea}>
+                    <form onSubmit={this.handleSumbit} className={classes.Input}>
+                        <textarea
+                            value={this.state.inputText}
+                            onChange={this.handleChange}
+                            type="text" 
+                            placeholder={"Enter new pending list here"} 
+                            className={classes.InputText}>
+                        </textarea>
+                        <button type="submit">Submit</button>
+                    </form>
                 </div>
 
                 <div className={classes.ToBeUpdated}>
-                    <h1>Pendings to update</h1>
                 </div>
             </div>
         )
