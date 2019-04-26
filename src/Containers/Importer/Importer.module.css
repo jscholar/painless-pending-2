@@ -1,0 +1,12 @@
+.Importer {
+    display: flex;
+}
+
+.InputArea {
+    width: 40%;
+}
+
+.ToBeUpdated {
+    width: 50%;
+    background-color: lightgray;
+}
