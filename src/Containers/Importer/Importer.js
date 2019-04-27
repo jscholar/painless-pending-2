@@ -14,7 +14,7 @@ class Importer extends React.Component {
             checkingPayload: false,
             pending: {},
         }
-        this.handleSumbit = this.handleSumbit.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.removeFromPayload = this.removeFromPayload.bind(this);
     }
@@ -25,13 +25,15 @@ class Importer extends React.Component {
         })
     }
 
-    handleSumbit(event) {
+    handleClick(event) {
         event.preventDefault();
         const newPending = parseInput(this.state.inputText);
-        this.setState({
-            pending: newPending,
-            checkingPayload: true
-        })
+        if (newPending) {
+            this.setState({
+                pending: newPending,
+                checkingPayload: true
+            })
+        }
     }
 
     removeFromPayload(wks, specID) {
@@ -50,7 +52,7 @@ class Importer extends React.Component {
         return (
             <div className={classes.Importer}>
                 <div className={classes.InputArea}>
-                    <form onSubmit={this.handleSumbit} className={classes.Input}>
+                    <TxtImport></TxtImport>
                         <textarea disabled={this.state.fileUpload}
                             value={this.state.inputText}
                             onChange={this.handleChange}
@@ -58,8 +60,7 @@ class Importer extends React.Component {
                             placeholder={"Enter new pending list here"}
                             className={classes.InputText}>
                         </textarea>
-                        <button type="submit">Submit</button>
-                    </form>
+                        <button onClick={this.handleClick}>Submit</button>
                 </div>
 
                 <div className={classes.ToBeUpdated}>
