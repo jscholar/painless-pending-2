@@ -8,12 +8,12 @@ const regex = {
 
 const getSpecID = (specText) => {
     const specID = specText.match(regex.specID);
-    return specID ? specID[0] : null;
+    return specID && specID[0];
 }
 
 const getWks = (wks) => {
     const wksNumber = wks.match(regex.wks);
-    return wksNumber ? wksNumber[0] : null;
+    return wksNumber && wksNumber[0].trim();
 }
 
 const splitSpecs = (wks) => {
