@@ -1,2 +1,8 @@
 .Navbar {
+    position: absolute;
+    bottom: 0;
+}
+
+.TabsWrapper {
+    margin-left: 40px;
 }

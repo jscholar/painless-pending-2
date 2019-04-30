@@ -1,6 +1,14 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { HashRouter } from 'react-router-dom';
+
 import App from './App';
 import './styles.css';
 
-ReactDOM.render(<App></App>, document.getElementById('root'));
+const app = (
+    <HashRouter>
+        <App></App>
+    </HashRouter>
+)
+
+ReactDOM.render(app, document.getElementById('root'));
