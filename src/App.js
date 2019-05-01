@@ -8,6 +8,7 @@ import Pendings from './Containers/Pendings/Pendings'
 import classes from './App.module.css'
 
 const App = (props) => {
+    
     return (
         <div className={classes.App}>
             <Layout>
