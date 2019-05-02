@@ -1,24 +1,19 @@
 const regex = {
     wks: /^\s+\d\d\d\d(?!-|\d)/,
     wksBreak: /WS #/,
-    specID: /\d\d\d-\d\d\d-\d\d\d\d-\d/,
+    specID: /\d\d\d-\d\d\d-\d\d\d\d-\d/g,
     specBreak: /(?=\n.+\d\d\d-\d\d\d-\d\d\d\d-\d)/,
 
 }
 
-const getSpecID = (specText) => {
+const getAllSpecID = (specText) => {
     const specID = specText.match(regex.specID);
-    return specID && specID[0];
+    return specID;
 }
 
 const getWks = (wks) => {
     const wksNumber = wks.match(regex.wks);
     return wksNumber && wksNumber[0].trim();
-}
-
-const splitSpecs = (wks) => {
-    const specs = wks.split(regex.specBreak).slice(1) // Removes unwanted line;
-    return specs;
 }
 
 const splitWks = (input) => {
@@ -36,11 +31,7 @@ const parseInput = (input) => {
     const pendingList = {};
     WKSs.forEach((pendingWks) => {
         const wksKey = getWks(pendingWks);
-        const specs = splitSpecs(pendingWks);
-        const wksPendings = specs.map((line) => {
-            const specID = getSpecID(line);
-            return { specID: specID }
-        });
+        const wksPendings = getAllSpecID(pendingWks);
         pendingList[wksKey] = wksPendings;
     })
     return pendingList;

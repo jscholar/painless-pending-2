@@ -6,9 +6,9 @@ const Payload = (props) => (
             <ul key={wks}>
                 <h1>{wks}</h1>
                 {props.pending[wks].map(spec => (
-                    <li key={spec.specID}>
-                        {spec.specID}
-                        <button onClick={() => props.removeSpec(wks, spec.specID)}>Delete</button>
+                    <li key={spec}>
+                        {spec}
+                        <button onClick={() => props.removeSpec(wks, spec)}>Delete</button>
                     </li>
                 ))}
             </ul>    

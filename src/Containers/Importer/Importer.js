@@ -28,6 +28,7 @@ class Importer extends React.Component {
     handleClick(event) {
         event.preventDefault();
         const newPending = parseInput(this.state.inputText);
+        console.log(newPending);
         if (newPending) {
             this.setState({
                 pending: newPending,
@@ -40,7 +41,7 @@ class Importer extends React.Component {
         const newPending = {
             ...this.state.pending,
         };
-        newPending[wks] = newPending[wks].filter(spec => spec.specID != specID);
+        newPending[wks] = newPending[wks].filter(spec => spec != specID);
         this.setState({
             ...this.state,
             pending: newPending
