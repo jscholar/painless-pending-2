@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TxtImport from './TxtImport';
+import TxtImport from './TxtImport/TxtImport';
 
 import classes from './InputReader.module.css';
 import Aux from './../../../Components/UI/Auxilliary/Auxilliary';

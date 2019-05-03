@@ -1,22 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 
-import database from './../../Firebase/instance';
+import Worksheets from './Worksheets/Worksheets';
+import SpecMenu from './SpecMenu/SpecMenu';
+
+import database from './../../Database/instance';
+
+import classes from './Pending.module.css'
 
 class Pendings extends React.Component {
     constructor() {
         super();
-        const pendingsRef = database.ref('specimens');
-        pendingsRef.on('value', (snapshot) => {
-            this.updatePendings(snapshot.val());
-        });
-        this.state = {
-        }
+        this.state = {}
     }
     
     render() {
-        return(
-            <div>
-                Pending specimens table
+        return (
+            <div className={classes.PendingsWrapper}>
+                <div className={classes.WorksheetMenu}>
+                    <Worksheets></Worksheets>
+                </div>
+                <div className={classes.SpecimenMenu}>
+                    <Route 
+                        path={'/pending/:wks'}
+                        component={SpecMenu}>
+                    </Route>
+                </div>
             </div>
         )
     }

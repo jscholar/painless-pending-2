@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Payload from './Payload/Payload';
 import InputReader from './InputReader/InputReader';
-import parseInput from './parseInput/parseInput';
-import TxtImport from './InputReader/TxtImport';
+import parseInput from './processInput/parseInput';
+import filterNew from './processInput/filterNew';
 
 import classes from './Uploader.module.css'
 
@@ -11,8 +12,10 @@ class Uploader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            checkingPayload: false,
-            pending: {},
+            payload: {
+                add: {},
+                purge: {}
+            },
         }
         this.addToPayload = this.addToPayload.bind(this);
         this.removeFromPayload = this.removeFromPayload.bind(this);
@@ -21,10 +24,11 @@ class Uploader extends React.Component {
     addToPayload(input) {
         event.preventDefault();
         let newPending = parseInput(input);
+        let newPayload = null
         if (newPending) {
+            newPayload = filterNew(this.props.currPending, newPending)
             this.setState({
-                pending: newPending,
-                checkingPayload: true
+                payload: newPayload,
             })
         }
     }
@@ -41,7 +45,6 @@ class Uploader extends React.Component {
     }
 
     render() {
-
         return (
             <div className={classes.Uploader}>
                 <div className={classes.InputArea}>
@@ -49,15 +52,26 @@ class Uploader extends React.Component {
                 </div>
 
                 <div className={classes.ToBeUpdated}>
-                    <h1>Detected new pending specimens?</h1>
-                    {this.state.checkingPayload ?
-                        <Payload removeSpec={this.removeFromPayload}
-                            pending={this.state.pending}></Payload>
-                        : null}
+                    <Payload
+                        removeSpec={this.removeFromPayload}
+                        checkingPayload
+                        payload={this.state.payload}></Payload>
                 </div>
             </div>
         )
     }
 }
 
-export default Uploader;
+const mapStateToProps = (state) => {
+    const pending = {
+        ...state.pending
+    }
+    for (let wks in state.pending) {
+        pending[wks] = { ...state.pending[wks] }
+    }
+    return {
+        currPending: pending
+    }
+}
+
+export default connect(mapStateToProps)(Uploader);

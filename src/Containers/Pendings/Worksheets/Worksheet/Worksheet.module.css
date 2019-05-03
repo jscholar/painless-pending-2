@@ -1,0 +1,28 @@
+.Worksheet {
+    width: 100%;
+    margin: 2px 0;
+}
+
+.Worksheet a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    padding: 5px 0 5px 10px;
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
+    border-bottom: 1px solid rgb(129, 129, 129);
+    transition: 100ms;
+    opacity: 0.6;
+}
+
+.Worksheet a:hover,
+.Worksheet .active {
+    margin-left: 5px;
+    opacity: 1.0;
+    filter: saturate(300%) brightness(110%);
+}
+
+.Resolved a {
+    background-color: rgb(213, 236, 195);
+}

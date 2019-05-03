@@ -1,0 +1,13 @@
+.PayloadWrapper {
+    text-align: center;
+}
+
+.Payload {
+    height: 100%;
+    display: flex;
+}
+
+.PendingAdd {
+    width: 50%;
+    border-right: 1px groove black;
+}
