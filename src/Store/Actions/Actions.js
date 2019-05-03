@@ -1,7 +1,8 @@
 export const FETCH_PENDING = 'FETCH_PENDING'
 
-export const fetchResult = () => {
+export const fetchPending = (newPending) => {
     return {
         type: FETCH_PENDING,
+        newPending
     }
 };
