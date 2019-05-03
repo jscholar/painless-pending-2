@@ -1,8 +1,11 @@
-export const FETCH_PENDING = 'FETCH_PENDING'
 
-export const fetchPending = (newPending) => {
+export const actionTypes = { 
+    STORE_PENDING: 'STORE_PENDING' 
+};
+
+export const storePending = (newPending) => {
     return {
-        type: FETCH_PENDING,
-        newPending
+        type: actionTypes.STORE_PENDING,
+        newPending: newPending
     }
 };

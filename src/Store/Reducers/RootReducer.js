@@ -1,4 +1,5 @@
 import blankPending from '../../Constants/WKS'
+import { actionTypes } from './../Actions/Actions';
 
 const initialState = {
     subscribedData: false,
@@ -9,9 +10,11 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'FETCH_PENDING':
+        case 'INIT':
+        case actionTypes.STORE_PENDING:
             const newPending = {
-                ...action.newPending
+                ...blankPending,
+                ...action.newPending,
             }
             return {
                 ...state,
