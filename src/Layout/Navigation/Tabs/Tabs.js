@@ -11,7 +11,7 @@ const Tabs = (props) => (
             Pending List
         </TabElement>
         <TabElement
-            link={"/new"}>
+            link={"/upload"}>
             Add/Update Pending List
         </TabElement>
     </div>

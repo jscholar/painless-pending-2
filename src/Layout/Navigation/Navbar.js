@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tabs from './../../Components/UI/Tabs/Tabs';
+import Tabs from './Tabs/Tabs';
 
 import classes from './Navbar.module.css';
 
