@@ -17,11 +17,27 @@ class Importer extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.removeFromPayload = this.removeFromPayload.bind(this);
+        this.handleFile = this.handleFile.bind(this);
+        this.resetInput = this.resetInput.bind(this);
+    }
+
+    resetInput() {
+        this.setState({
+            fileUpload: false,
+            inputText: ''
+        })
     }
 
     handleChange(event) {
         this.setState({
-            inputText: event.target.value
+            inputText: event.target.value,
+        })
+    }
+
+    handleFile(text) {
+        this.setState({
+            inputText: text,
+            fileUpload: true
         })
     }
 
@@ -41,7 +57,7 @@ class Importer extends React.Component {
         const newPending = {
             ...this.state.pending,
         };
-        newPending[wks] = newPending[wks].filter(spec => spec != specID);
+        delete newPending[wks][specID];
         this.setState({
             ...this.state,
             pending: newPending
@@ -53,23 +69,23 @@ class Importer extends React.Component {
         return (
             <div className={classes.Importer}>
                 <div className={classes.InputArea}>
-                    <TxtImport></TxtImport>
-                        <textarea disabled={this.state.fileUpload}
-                            value={this.state.inputText}
-                            onChange={this.handleChange}
-                            type="text"
-                            placeholder={"Enter new pending list here"}
-                            className={classes.InputText}>
-                        </textarea>
-                        <button onClick={this.handleClick}>Submit</button>
+                    <TxtImport cancelFileInput={this.resetInput} fileHandler={this.handleFile}></TxtImport>
+                    <textarea disabled={this.state.fileUpload}
+                        value={this.state.inputText}
+                        onChange={this.handleChange}
+                        type="text"
+                        placeholder={"Enter new pending list here"}
+                        className={classes.InputText}>
+                    </textarea>
+                    <button onClick={this.handleClick}>Submit</button>
                 </div>
 
                 <div className={classes.ToBeUpdated}>
                     <h1>Detected new pending specimens?</h1>
-                    {this.state.checkingPayload ? 
-                    <Payload removeSpec={this.removeFromPayload} 
-                    pending={this.state.pending}></Payload>
-                     : null}
+                    {this.state.checkingPayload ?
+                        <Payload removeSpec={this.removeFromPayload}
+                            pending={this.state.pending}></Payload>
+                        : null}
                 </div>
             </div>
         )

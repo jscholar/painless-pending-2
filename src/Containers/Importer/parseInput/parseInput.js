@@ -31,7 +31,8 @@ const parseInput = (input) => {
     const pendingList = {};
     WKSs.forEach((pendingWks) => {
         const wksKey = getWks(pendingWks);
-        const wksPendings = getAllSpecID(pendingWks);
+        const wksPendings = {};
+        getAllSpecID(pendingWks).forEach((spec) => wksPendings[spec] = true);
         pendingList[wksKey] = wksPendings;
     })
     return pendingList;

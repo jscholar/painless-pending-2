@@ -13,6 +13,8 @@
 .ToBeUpdated {
     width: 50%;
     background-color: lightgray;
+    overflow-y: scroll;
+    padding: 5px;
 }
 
 .InputText {
