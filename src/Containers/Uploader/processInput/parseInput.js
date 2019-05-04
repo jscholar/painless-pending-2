@@ -8,7 +8,7 @@ const regex = {
 
 const getAllSpecID = (specText) => {
     const specID = specText.match(regex.specID);
-    return specID;
+    return specID || [];
 }
 
 const getWks = (wks) => {
