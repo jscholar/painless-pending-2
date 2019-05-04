@@ -11,7 +11,6 @@ class Listener {
 
     fetchPending() {
         database.ref('worksheets/').once('value').then((snapshot) => {
-            console.log(snapshot.val());
             this.store.dispatch(storePending(snapshot.val()));
         })
     }
