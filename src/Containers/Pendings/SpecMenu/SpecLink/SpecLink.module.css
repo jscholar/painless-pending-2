@@ -1,0 +1,9 @@
+.SpecLink a {
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.6;
+}
+
+.Test {
+    color: blue;
+}

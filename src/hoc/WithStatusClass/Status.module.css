@@ -1,0 +1,7 @@
+.Unresolved > * {
+    background-color: rgba(255, 104, 104, 0.37);
+}
+
+.Resolved > * {
+    background-color: rgb(213, 236, 195);
+}

@@ -2,20 +2,17 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import SpecLink from './SpecLink/SpecLink'
+
+import classes from './SpecMenu.module.css';
+
 const SpecMenu = (props) => {
-    const specsDisplay = Object.keys(props.specs).map(spec => (
-        <NavLink key={spec} to={{
-            pathname: props.match.url,
-            search: `?${encodeURIComponent('spec')}=${encodeURIComponent(spec)}`,
-        }}>
-            <div >
-                {spec}
-            </div>
-        </NavLink>
-    ))
+    let menu = Object.keys(props.specs).map(spec =>
+        <SpecLink key={spec} spec={spec} status={props.specs[spec]}></SpecLink>
+    )
     return (
-        <div>
-            {specsDisplay}
+        <div className={classes.SpecMenu}>
+            {menu}
         </div>
     )
 };
