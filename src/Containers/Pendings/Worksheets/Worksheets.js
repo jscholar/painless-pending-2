@@ -8,14 +8,15 @@ import classes from './Worksheet.module.css'
 
 const Worksheets = (props) => (
     <div className={classes.Worksheets}>
-        {Object.keys(WKS).map((wks) => (
-            <Worksheet 
-                key={wks} 
-                wksNumber={wks} 
-                status={'resolved'}
-                selectWorksheet={props.clickHandler}
+        {Object.keys(WKS).map((wks) => {
+            return (
+                <Worksheet
+                    counts={props.pending[wks]}
+                    key={wks}
+                    wksNumber={wks}
                 ></Worksheet>
-        ))}
+            )
+        })}
     </div>
 );
 

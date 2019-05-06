@@ -5,12 +5,11 @@ import Payload from './Payload/Payload';
 import InputReader from './InputReader/InputReader';
 import Modal from './../../Components/UI/Modal/Modal';
 
-import uplad from './../../Database/upload/upload';
 import parseInput from './processInput/parseInput';
 import filterNew from './processInput/filterNew';
 
 import classes from './Uploader.module.css'
-import upload from './../../Database/upload/upload';
+import { upload } from './../../Database/database';
 
 class Uploader extends React.Component {
     constructor(props) {

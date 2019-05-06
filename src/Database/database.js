@@ -1,7 +1,10 @@
-import database from '../instance';
+import database from './instance';
+import { storePending, storeSpec } from './../Store/Actions/Actions';
+import { store } from './../index';
 
-const upload = async (payload) => {
-    const date = new Date().toLocaleString('en-US', {hour12: false})
+
+export const upload = (payload) => {
+    const date = new Date().toLocaleString('en-US', { hour12: false })
     for (let wks in payload.add) {
         for (let spec in payload.add[wks]) {
             const specNode = {
@@ -24,4 +27,19 @@ const upload = async (payload) => {
     }
 }
 
-export default upload;
+export const fetchSpec = (specNum) => {
+    database.ref(`specimens/${specNum}`).once('value')
+    .then((snapshot) => {
+        store.dispatch(storeSpec({
+            ...snapshot.val(),
+            id: specNum
+        })
+    )})
+}
+
+export const fetchPending = () => {
+    database.ref('worksheets/').once('value')
+    .then((snapshot) => {
+        store.dispatch(storePending(snapshot.val()));
+    })
+}

@@ -6,11 +6,11 @@ const initialState = {
     pending: {
         ...blankPending
     },
+    currentSpec: null
 }
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'INIT':
         case actionTypes.STORE_PENDING:
             const newPending = {
                 ...blankPending,
@@ -19,6 +19,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pending: newPending
+            }
+        case actionTypes.STORE_SPEC: 
+            return {
+                ...state,
+                currentSpec: action.newSpec
             }
         default:
             return state;

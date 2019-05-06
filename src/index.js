@@ -5,13 +5,11 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
 import rootReducer from './Store/Reducers/RootReducer';
-import Listener from './Database/Listener/Listener';
 
 import App from './App';
 import './styles.css';
 
-const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-const listener = new Listener(store);
+export const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 const app = (
     <Provider store={store}>
@@ -19,7 +17,6 @@ const app = (
                 <App/>
         </HashRouter>
     </Provider>
-
 )
 
 ReactDOM.render(app, document.getElementById('root'));
