@@ -20,7 +20,13 @@ const WorksheetLink = (props) => {
                 <NavLink activeClassName={classes.active}
                     to={`/pending/${props.wksNumber}`}>
                     <span>{props.wksNumber}</span>
-                    <span></span>
+                    <div className={classes.StatusCounters}>
+                        {Object.keys(counts).map(status => (
+                            <WithStatusClass key={status} status={status}>
+                                <span className={classes.Counter}>{counts[status]}</span>
+                            </WithStatusClass>
+                        ))}
+                    </div>
                 </NavLink>
             </WithStatusClass>
         </div>

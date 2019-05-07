@@ -1,6 +1,7 @@
 .PendingsWrapper {
     height: 100%;
     display: flex;
+    
 }
 
 .WorksheetMenu {
@@ -9,9 +10,13 @@
     background-color: rgb(216, 216, 216);
     padding: 15px 15px 50px;
     width: 15%;
-    min-width: 160px;
+    min-width: 175px;
 }
 
 .SpecimenMenu {
-    
+    width: 10%;
+    min-width: 150px;
+}
+
+.SpecimenWrapper {
 }

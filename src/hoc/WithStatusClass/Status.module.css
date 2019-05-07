@@ -1,7 +1,15 @@
+.Status {
+    display: inline;
+}
+
 .Unresolved > * {
     background-color: rgba(255, 104, 104, 0.37);
 }
 
+.Watch > * {
+    background-color: rgba(199, 199, 41, 0.562);
+}
+
 .Resolved > * {
-    background-color: rgb(213, 236, 195);
+    background-color: rgba(148, 240, 78, 0.363);
 }

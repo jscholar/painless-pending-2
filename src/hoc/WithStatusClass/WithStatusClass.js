@@ -9,6 +9,9 @@ const WithStatusClass = (props) => {
         case 'unresolved':
             statusClass += ' ' + classes.Unresolved
             break;
+        case 'watch':
+            statusClass += ' ' + classes.Watch;
+            break;
         case 'resolved': {
             statusClass += ' ' + classes.Resolved;
             break;
