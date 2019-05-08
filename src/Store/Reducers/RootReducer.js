@@ -3,6 +3,7 @@ import { actionTypes } from './../Actions/Actions';
 
 const initialState = {
     subscribedData: false,
+    fetchedPending: false,
     pending: {
         ...blankPending
     },
@@ -18,12 +19,23 @@ const rootReducer = (state = initialState, action) => {
             }
             return {
                 ...state,
+                fetchedPending: true,
                 pending: newPending
             }
         case actionTypes.STORE_SPEC: 
             return {
                 ...state,
                 currentSpec: action.newSpec
+            }
+        case actionTypes.UPDATE_WKS_PENDING:
+            const updatedPending = {...state.pending};
+            updatedPending[action.wks] = {...state.pending[action.wks]};
+            updatedPending[action.wks][action.spec] = action.status
+            return {
+                ...state,
+                pending: {
+                    ...updatedPending
+                }
             }
         default:
             return state;

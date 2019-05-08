@@ -11,7 +11,6 @@ const Worksheets = (props) => (
         {Object.keys(WKS).map((wks) => {
             return (
                 <WorksheetLink
-                    specs={props.pending[wks]}
                     key={wks}
                     wksNumber={wks}
                 ></WorksheetLink>
@@ -20,10 +19,4 @@ const Worksheets = (props) => (
     </div>
 );
 
-const mapStateToProps = (state) => {
-    return {
-        pending: state.pending
-    }
-}
-
-export default connect(mapStateToProps)(Worksheets);
+export default Worksheets;

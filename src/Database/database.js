@@ -1,23 +1,32 @@
 import database from './instance';
-import { storePending, storeSpec } from './../Store/Actions/Actions';
+import { storePending, storeSpec, updateWksPending } from './../Store/Actions/Actions';
 import { store } from './../index';
+import statusTypes from './../Constants/STATUS_TYPES';
 
+export const listenSpecs = () => {
+    database.ref('specimens/').on('child_changed', (snapshot) => {
+        if (snapshot.key === store.getState().currentSpec.id) {
+            store.dispatch(storeSpec({
+                ...snapshot.val(),
+                id: snapshot.key
+            }))
+        }
+        database.ref('specimens/').child(snapshot.key).child('worksheets').on("child_added", (wksData) => {
+            store.dispatch(updateWksPending(wksData.key, snapshot.key, wksData.val().status))
+        })
+        
+        // child('worksheets').on('child_changed', wksData => {
+        //     store.dispatch(updateWksPending(wksData.key, snapshot.key, wksData.val().status));
+        //     console.log('dispatched action');
+        // })
+    })
+}
 
 export const upload = (payload) => {
-    const date = new Date().toLocaleString('en-US', { hour12: false })
     for (let wks in payload.add) {
         for (let spec in payload.add[wks]) {
-            const specNode = {
-                wksNum: wks,
-                dateAdded: date,
-                status: 'unresolved'
-            }
-            database.ref(`worksheets/${wks}/${spec}`).set('unresolved')
-            database.ref(`specimens/${spec}/worksheets/${wks}`).update(specNode)
-            database.ref(`specimens/${spec}/history`).push().set({
-                date: date,
-                message: `Added worksheet ${wks}`
-            })
+            const newMessage = `Added worksheet: ${wks}`;
+            updateStatus(spec, wks, statusTypes.unresolved, newMessage)
         }
     }
     for (let wks in payload.purge) {
@@ -27,19 +36,34 @@ export const upload = (payload) => {
     }
 }
 
-export const fetchSpec = (specNum) => {
-    database.ref(`specimens/${specNum}`).once('value')
-    .then((snapshot) => {
-        store.dispatch(storeSpec({
-            ...snapshot.val(),
-            id: specNum
+export const fetchSpec = (specID) => {
+    database.ref(`specimens/${specID}`).once('value')
+        .then((snapshot) => {
+            store.dispatch(storeSpec({
+                ...snapshot.val(),
+                id: specID
+            })
+            )
         })
-    )})
 }
 
 export const fetchPending = () => {
     database.ref('worksheets/').once('value')
-    .then((snapshot) => {
-        store.dispatch(storePending(snapshot.val()));
+        .then((snapshot) => {
+            store.dispatch(storePending(snapshot.val()));
+        })
+}
+
+export const updateStatus = (specID, wks, status, message) => {
+    const date = new Date().toLocaleString('en-US', { hour12: false })
+    const specNode = {
+        wksNum: wks,
+        status: status
+    }
+    database.ref(`worksheets/${wks}/${specID}`).set(status);
+    database.ref(`specimens/${specID}/worksheets/${wks}`).update(specNode);
+    database.ref(`specimens/${specID}/history`).push().set({
+        date: date,
+        message: message
     })
 }

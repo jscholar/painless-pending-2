@@ -1,0 +1,20 @@
+.Loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis 1s infinite 300ms;      
+  animation: ellipsis 1s infinite 300ms;
+  content: "..."; 
+}
+
+@keyframes ellipsis {
+    33% {
+        content: ".\00a0\00a0"
+    }
+    66% {
+        content: "..\00a0"
+    }
+    100% {
+        content: "..."
+    }
+}

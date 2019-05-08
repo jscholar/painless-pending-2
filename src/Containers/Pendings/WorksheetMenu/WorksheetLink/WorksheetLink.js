@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import classes from './WorksheetLink.module.css'
 import WithStatusClass from '../../../../hoc/WithStatusClass/WithStatusClass';
@@ -33,4 +34,10 @@ const WorksheetLink = (props) => {
     )
 };
 
-export default WorksheetLink;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        specs: state.pending[ownProps.wksNumber]
+    }
+}
+
+export default connect(mapStateToProps)(WorksheetLink);
