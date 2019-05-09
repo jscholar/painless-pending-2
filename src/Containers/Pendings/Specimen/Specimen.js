@@ -1,28 +1,74 @@
 import React from 'react';
 
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchSpec } from './../../../Database/database';
+import Aux from './../../../hoc/Auxilliary/Auxilliary';
+import { fetchSpec, updateStatus } from '../../../Database/database';
+import WithStatusClass from '../../../hoc/WithStatusClass/WithStatusClass';
+import statusTypes from './../../../Constants/STATUS_TYPES';
 
+import classes from './Specimen.module.css'
 class Specimen extends React.Component {
     constructor(props) {
         super(props);
+        this.selectSpecID = this.selectSpecID.bind(this);
     }
 
     componentDidMount() {
-        
+        const spec = new URLSearchParams(this.props.location.search).get('spec');
+        if (spec) {
+            fetchSpec(spec);
+        }
+    }
+
+    updateSpecWKS(worksheet, status) {
+        updateStatus(this.props.spec.id, worksheet, status, 'testing update spec WKS');
+    }
+
+    selectSpecID() {
+        const range = document.createRange();
+        range.selectNode(document.getElementById("specID"));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
     }
 
     render() {
         let specDisplay = null;
         if (this.props.spec) {
-            specDisplay = (
-                <div>
+            const events = Object.keys(this.props.spec.history).map(event => (
+                <li key={event}>
+                    <p>{this.props.spec.history[event].message}</p>
+                    <span>{this.props.spec.history[event].date}</span>
+                </li>
+            ))
+
+            const worksheets = Object.keys(this.props.spec.worksheets).map(wks => (
+                <div key={wks}>
+                    <WithStatusClass key={wks} status={this.props.spec.worksheets[wks].status}>
+                        <span>{wks}</span>
+                    </WithStatusClass>
+                    <button onClick={() => this.updateSpecWKS(wks, statusTypes.watch)}>Watch</button>
+                    <button onClick={() => this.updateSpecWKS(wks, statusTypes.resolved)}>Resolve</button>
                 </div>
+            ))
+            specDisplay = (
+                <Aux>
+                    <div className={classes.Accession}>
+                        <span className={classes.AccessionLabel}>Acc #</span>
+                        <span id="specID" onClick={this.selectSpecID} className={classes.AccessionNum}>{this.props.spec.id}</span>
+                        <i title="Copy to Clipboard" className={classes.CopyIcon + " far fa-copy"}></i>
+                    </div>
+                    <br></br>
+                    <ul>
+                        {events}
+                    </ul>
+                    {worksheets}
+                </Aux>
             )
         }
         return (
-            <div>
-                
+            <div className={classes.Specimen}>
+                {specDisplay}
             </div>
         )
     } 
@@ -35,4 +81,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(Specimen);
+export default withRouter(connect(mapStateToProps)(Specimen));
