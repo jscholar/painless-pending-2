@@ -28,9 +28,10 @@ const rootReducer = (state = initialState, action) => {
                 currentSpec: action.newSpec
             }
         case actionTypes.UPDATE_WKS_PENDING:
-            const updatedPending = {...state.pending};
-            updatedPending[action.wks] = {...state.pending[action.wks]};
-            updatedPending[action.wks][action.spec] = action.status
+            const updatedPending = {
+                ...state.pending
+            }
+            updatedPending[action.wks] = action.wksData;
             return {
                 ...state,
                 pending: {

@@ -5,20 +5,16 @@ import statusTypes from './../Constants/STATUS_TYPES';
 
 export const listenSpecs = () => {
     database.ref('specimens/').on('child_changed', (snapshot) => {
-        if (snapshot.key === store.getState().currentSpec.id) {
+        if (store.getState().currentSpec && snapshot.key === store.getState().currentSpec.id) {
             store.dispatch(storeSpec({
                 ...snapshot.val(),
                 id: snapshot.key
             }))
         }
-        database.ref('specimens/').child(snapshot.key).child('worksheets').on("child_added", (wksData) => {
-            store.dispatch(updateWksPending(wksData.key, snapshot.key, wksData.val().status))
-        })
-        
-        // child('worksheets').on('child_changed', wksData => {
-        //     store.dispatch(updateWksPending(wksData.key, snapshot.key, wksData.val().status));
-        //     console.log('dispatched action');
-        // })
+    })
+
+    database.ref('worksheets/').on('child_changed', (wks) => {
+        store.dispatch(updateWksPending(wks.key, wks.val()));
     })
 }
 
@@ -31,7 +27,7 @@ export const upload = (payload) => {
     }
     for (let wks in payload.purge) {
         for (let spec in payload.purge[wks]) {
-            database.ref(`worksheets/${wks}/${spec}`).set(null);
+            database.ref(`worksheets/${wks}/${spec}`).remove();
         }
     }
 }

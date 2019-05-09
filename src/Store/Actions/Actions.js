@@ -12,12 +12,11 @@ export const storePending = (newPending) => {
     }
 };
 
-export const updateWksPending = (wks, spec, status) => {
+export const updateWksPending = (wks, wksData) => {
     return {
         type: actionTypes.UPDATE_WKS_PENDING,
         wks,
-        spec,
-        status
+        wksData
     }
 }
 
