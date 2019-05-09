@@ -14,7 +14,7 @@
 
 .SpecimenMenu {
     width: 10%;
-    min-width: 175px;
+    min-width: fit-content;
 }
 
 .SpecimenWrapper {

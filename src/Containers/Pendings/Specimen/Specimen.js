@@ -43,13 +43,20 @@ class Specimen extends React.Component {
             ))
 
             const worksheets = Object.keys(this.props.spec.worksheets).map(wks => (
-                <div key={wks}>
-                    <WithStatusClass key={wks} status={this.props.spec.worksheets[wks].status}>
+                <tr key={wks}>
+                    <td>
                         <span>{wks}</span>
-                    </WithStatusClass>
-                    <button onClick={() => this.updateSpecWKS(wks, statusTypes.watch)}>Watch</button>
-                    <button onClick={() => this.updateSpecWKS(wks, statusTypes.resolved)}>Resolve</button>
-                </div>
+                    </td>
+                    <td>
+                        <WithStatusClass key={wks} status={this.props.spec.worksheets[wks].status}>
+                            <span>{this.props.spec.worksheets[wks].status}</span>
+                        </WithStatusClass>
+                    </td>
+                    <td>
+                        <button onClick={() => this.updateSpecWKS(wks, statusTypes.watch)}>Watch</button>
+                        <button onClick={() => this.updateSpecWKS(wks, statusTypes.resolved)}>Resolve</button>
+                    </td>
+                </tr>
             ))
             specDisplay = (
                 <Aux>
@@ -59,10 +66,25 @@ class Specimen extends React.Component {
                         <i title="Copy to Clipboard" className={classes.CopyIcon + " far fa-copy"}></i>
                     </div>
                     <br></br>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>
+                                Worksheet
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Notes
+                            </th>
+                        </tr>
+                        {worksheets}
+                        </tbody>
+                    </table>
                     <ul>
                         {events}
                     </ul>
-                    {worksheets}
                 </Aux>
             )
         }
@@ -71,7 +93,7 @@ class Specimen extends React.Component {
                 {specDisplay}
             </div>
         )
-    } 
+    }
 };
 
 const mapStateToProps = (state) => {
