@@ -4,11 +4,11 @@ module.exports = {
     mode: "development",
     entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "docs"),
         filename: "bundle.js"
     },
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'docs'),
         port: 9000
     },
     module: {
