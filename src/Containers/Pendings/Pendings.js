@@ -2,7 +2,6 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchSpec, fetchPending } from './../../Database/database';
 import WorksheetMenu from './WorksheetMenu/WorksheetMenu';
 import SpecMenu from './SpecMenu/SpecMenu';
 
@@ -28,7 +27,7 @@ class Pendings extends React.Component {
                     </Route>
                 </div>
                 <div className={classes.SpecimenWrapper}>
-                    {this.props.location.search ? <Specimen></Specimen> : null}
+                    <Specimen></Specimen>
                 </div>
             </div>
         )
