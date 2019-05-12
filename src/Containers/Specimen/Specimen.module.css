@@ -1,0 +1,20 @@
+.Specimen th, .Specimen td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.Specimen {
+    background-color: rgb(241, 241, 241);
+    height: 100%;
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+}
+
+.HistoryContainer {
+    position: absolute;
+    box-sizing: content-box;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}

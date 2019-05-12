@@ -1,4 +1,5 @@
 .PendingsWrapper {
+    margin: auto;
     height: 100%;
     display: flex;
 }
@@ -19,5 +20,5 @@
 
 .SpecimenWrapper {
     flex-grow: 1;
-    max-width: 1000px;
+    padding: 20px;
 }

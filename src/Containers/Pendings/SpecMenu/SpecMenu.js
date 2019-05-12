@@ -12,6 +12,7 @@ const SpecMenu = (props) => {
     )
     return (
         <div className={classes.SpecMenu}>
+            {props.match.params['wks']}
             {menu}
         </div>
     )

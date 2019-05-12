@@ -1,16 +1,3 @@
-.Specimen th, .Specimen td {
-  border: 1px solid black;
-}
-
-.Specimen {
-    margin: 40px 0 40px 40px;
-    background-color: rgb(241, 241, 241);
-    width: 100%;
-    height: 90%;
-    border-radius: 20px;
-    padding: 20px;
-}
-
 .Accession {
     text-align: center;
 }

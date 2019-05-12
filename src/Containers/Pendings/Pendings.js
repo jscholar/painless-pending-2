@@ -6,7 +6,7 @@ import WorksheetMenu from './WorksheetMenu/WorksheetMenu';
 import SpecMenu from './SpecMenu/SpecMenu';
 
 import classes from './Pending.module.css'
-import Specimen from './Specimen/Specimen';
+import Specimen from './../Specimen/Specimen';
 
 class Pendings extends React.Component {
     constructor(props) {
