@@ -6,15 +6,12 @@ import statusTypes from './../Constants/STATUS_TYPES';
 export const listenSpecs = () => {
     database.ref('specimens/').on('child_changed', (snapshot) => {
         if (store.getState().currentSpec && snapshot.key === store.getState().currentSpec.id) {
-            store.dispatch(storeSpec({
-                ...snapshot.val(),
-                id: snapshot.key
-            }))
+            store.dispatch(storeSpec(snapshot));
         }
     })
 
-    database.ref('worksheets/').on('child_changed', (wks) => {
-        store.dispatch(updateWksPending(wks.key, wks.val()));
+    database.ref('worksheets/').on('child_changed', (snapshot) => {
+        store.dispatch(updateWksPending(snapshot));
     })
 }
 
@@ -35,23 +32,18 @@ export const upload = (payload) => {
 export const fetchSpec = (specID) => {
     database.ref(`specimens/${specID}`).once('value')
         .then((snapshot) => {
-            store.dispatch(storeSpec({
-                ...snapshot.val(),
-                id: specID
-            })
-            )
+            store.dispatch(storeSpec(snapshot))
         })
 }
 
 export const fetchPending = () => {
     database.ref('worksheets/').once('value')
         .then((snapshot) => {
-            store.dispatch(storePending(snapshot.val()));
+            store.dispatch(storePending(snapshot));
         })
 }
 
 export const updateStatus = (specID, wks, status, message) => {
-    const date = new Date().toLocaleString('en-US', { hour12: false })
     const specNode = {
         wksNum: wks,
         status: status
@@ -59,6 +51,11 @@ export const updateStatus = (specID, wks, status, message) => {
     if (status === statusTypes.resolved) status = null;
     database.ref(`worksheets/${wks}/${specID}`).set(status);
     database.ref(`specimens/${specID}/worksheets/${wks}`).update(specNode);
+    addEvent(specID, message);
+}
+
+export const addEvent = (specID, message) => {
+    const date = new Date().toLocaleString('en-US', { hour12: false })
     database.ref(`specimens/${specID}/history`).push().set({
         date: date,
         message: message

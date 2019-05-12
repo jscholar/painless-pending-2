@@ -5,14 +5,17 @@ export const actionTypes = {
     UPDATE_WKS_PENDING: 'UPDATE_WKS_PENDING'
 };
 
-export const storePending = (newPending) => {
+export const storePending = (pendingSnapshot) => {
+    const newPending = pendingSnapshot.val()
     return {
         type: actionTypes.STORE_PENDING,
-        newPending: newPending
+        newPending: { ...newPending }
     }
 };
 
-export const updateWksPending = (wks, wksData) => {
+export const updateWksPending = (wksSnapshot) => {
+    const wks = wksSnapshot.key;
+    const wksData = wksSnapshot.val();
     return {
         type: actionTypes.UPDATE_WKS_PENDING,
         wks,
@@ -20,9 +23,14 @@ export const updateWksPending = (wks, wksData) => {
     }
 }
 
-export const storeSpec = (spec) => {
+export const storeSpec = (specSnapshot) => {
+    const specID = specSnapshot.key;
+    const specData = specSnapshot.val();
     return {
         type: actionTypes.STORE_SPEC,
-        newSpec: spec
+        newSpec: {
+            id: specID,
+            ...specData
+        }
     }
 }
