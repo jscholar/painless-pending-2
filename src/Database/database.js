@@ -56,6 +56,7 @@ export const updateStatus = (specID, wks, status, message) => {
         wksNum: wks,
         status: status
     }
+    if (status === statusTypes.resolved) status = null;
     database.ref(`worksheets/${wks}/${specID}`).set(status);
     database.ref(`specimens/${specID}/worksheets/${wks}`).update(specNode);
     database.ref(`specimens/${specID}/history`).push().set({

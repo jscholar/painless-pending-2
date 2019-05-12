@@ -4,17 +4,18 @@ import { connect } from 'react-redux';
 
 import classes from './WorksheetLink.module.css'
 import WithStatusClass from '../../../../hoc/WithStatusClass/WithStatusClass';
+import statusTypes from './../../../../Constants/STATUS_TYPES';
 
 const WorksheetLink = (props) => {
     const counts = {
-        'unresolved': 0,
-        'watch': 0,
-        'resolved': 0,
+        [statusTypes.unresolved]: 0,
+        [statusTypes.watch]: 0,
+        [statusTypes.resolved]: 0,
     }
     Object.values(props.specs).forEach(specStatus => counts[specStatus]++);
-    let wksStatus = 'resolved';
-    wksStatus = counts['watch'] > 0 ? 'watch' : wksStatus;
-    wksStatus = counts['unresolved'] > 0 ? 'unresolved' : wksStatus;
+    let wksStatus = statusTypes.resolved;
+    wksStatus = counts[statusTypes.watch] > 0 ? statusTypes.watch : wksStatus;
+    wksStatus = counts[statusTypes.unresolved] > 0 ? statusTypes.unresolved : wksStatus;
     return (
         <div className={classes.WorksheetLink}>
             <WithStatusClass status={wksStatus}>
@@ -22,11 +23,12 @@ const WorksheetLink = (props) => {
                     to={`/pending/${props.wksNumber}`}>
                     <span>{props.wksNumber}</span>
                     <div className={classes.StatusCounters}>
-                        {Object.keys(counts).map(status => (
-                            <WithStatusClass key={status} status={status}>
-                                <span className={classes.Counter}>{counts[status]}</span>
-                            </WithStatusClass>
-                        ))}
+                        <WithStatusClass key={statusTypes.unresolved} status={statusTypes.unresolved}>
+                            <span className={classes.Counter}>{counts[statusTypes.unresolved]}</span>
+                        </WithStatusClass>
+                        <WithStatusClass key={statusTypes.watch} status={statusTypes.watch}>
+                            <span className={classes.Counter}>{counts[statusTypes.watch]}</span>
+                        </WithStatusClass>
                     </div>
                 </NavLink>
             </WithStatusClass>

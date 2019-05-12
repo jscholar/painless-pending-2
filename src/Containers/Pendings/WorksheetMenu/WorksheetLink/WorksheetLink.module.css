@@ -1,7 +1,22 @@
 .WorksheetLink {
     align-items: center;
     width: 100%;
-    margin: 2px 0;
+    margin: 5px 0;
+}
+
+.ShutterAnimation {
+    animation-name: shutter;
+    animation-duration: 1.0s;
+    animation-timing-function: ease;
+}
+
+@keyframes shutter {
+    from {
+        filter: brightness(150%);
+    }
+    to{
+        filter: none;
+    }
 }
 
 .WorksheetLink a {
@@ -12,16 +27,18 @@
     font-weight: bold;
     height: 100%;
     width: 100%;
-    border-bottom: 1px solid rgb(129, 129, 129);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.664);
     transition: 100ms;
+    border-left: 0 solid rgba(255, 255, 255, 0);
     opacity: 0.75;
 }
 
 .WorksheetLink a:hover,
-.WorksheetLink .active {
-    margin-left: 5px;
+.WorksheetLink a.active {
     opacity: 1;
-    filter: saturate(300%) brightness(110%);
+    width: calc(100% + 10px);
+    border-left: 10px solid rgb(84, 143, 182);
+    box-shadow: 0 0 5px 2px inset rgba(255, 255, 255, 0.61), 0 0 5px 1px rgba(255, 255, 255, 0.61);
 }
 
 .StatusCounters {
@@ -30,8 +47,6 @@
     width: 50%;
     justify-content: space-around;
     margin-right: 5px;
-    background-color: rgba(0, 0, 0, 0.26);
-    border-radius: 3px;
     padding: 3px 0;
 }
 
@@ -39,5 +54,6 @@
     padding: 0 4px;
     border-radius: 3px;
     color: rgba(255, 255, 255, 0.993);
-    text-shadow: 0 0 3px rgb(255, 255, 255);
+    text-shadow: 0 0 1px rgb(255, 255, 255);
+    box-shadow: 2px 2px 3px 1px black;
 }
