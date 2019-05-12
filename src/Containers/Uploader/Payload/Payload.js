@@ -4,7 +4,6 @@ import classes from './Payload.module.css'
 
 const Payload = (props) => {
     let pendingAdd = null;
-    let pendingPurge = null;
 
     const payloadToJSX = (payload, type) => {
         let JSX = "None";
@@ -26,7 +25,6 @@ const Payload = (props) => {
 
     if (props.checkingPayload) {
         pendingAdd = payloadToJSX(props.payload.add, 'add');
-        pendingPurge = payloadToJSX(props.payload.purge, 'purge');
     }
 
     return (
@@ -37,11 +35,6 @@ const Payload = (props) => {
                     <h3>Pending Add</h3>
                     <hr />
                     {pendingAdd}
-                </div>
-                <div className={classes.PendingPurge}>
-                    <h3>Pending Purge</h3>
-                    <hr />
-                    {pendingPurge}
                 </div>
             </div>
         </div>

@@ -19,7 +19,6 @@ class Uploader extends React.Component {
             confirming: false,
             payload: {
                 add: {},
-                purge: {}
             },
         }
         this.addToPayload = this.addToPayload.bind(this);
@@ -58,7 +57,6 @@ class Uploader extends React.Component {
     removeFromPayload(wks, specID, type) {
         const newPayload = {
             add: { ...this.state.payload.add },
-            purge: { ...this.state.payload.purge }
         };
         delete newPayload[type][wks][specID];
         this.setState({
@@ -76,7 +74,6 @@ class Uploader extends React.Component {
     confirmUpload() {
         const newPayload = {
             add: { ...this.state.payload.add },
-            purge: { ...this.state.payload.purge }
         };
         upload(newPayload);
         this.clearPayload();
