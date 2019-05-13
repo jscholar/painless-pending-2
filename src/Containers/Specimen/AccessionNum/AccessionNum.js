@@ -3,7 +3,6 @@ import React from 'react';
 import classes from './AccessionNum.module.css'
 
 const AccessionNum = (props) => {
-
     const selectSpecID = () => {
         const range = document.createRange();
         range.selectNode(document.getElementById("specID"));

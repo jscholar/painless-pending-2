@@ -3,18 +3,24 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Aux from '../../hoc/Auxilliary/Auxilliary';
-import { fetchSpec, updateStatus } from '../../Database/database';
-import WithStatusClass from '../../hoc/WithStatusClass/WithStatusClass';
-import statusTypes from '../../Constants/STATUS_TYPES';
+import { fetchSpec, updateStatus, addEvent } from '../../Database/database';
+import statusTypes from './../../Constants/STATUS_TYPES';
+
+import AccessionNum from './AccessionNum/AccessionNum';
+import SpecEvents from './SpecEvents/SpecEvents';
+import WorksheetTable from './WorksheetTable/WorksheetTable';
 
 import classes from './Specimen.module.css'
-import AccessionNum from './AccessionNum/AccessionNum';
-import SpecHistory from './SpecHistory/SpecHistory';
 
 class Specimen extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            message: '',
+        }
         this.getSpecQuery = this.getSpecQuery.bind(this);
+        this.appendMessage = this.appendMessage.bind(this);
+        this.handleMessageChange = this.handleMessageChange.bind(this);
     }
 
     componentDidMount() {
@@ -43,48 +49,34 @@ class Specimen extends React.Component {
         updateStatus(this.props.spec.id, worksheet, status, message);
     }
 
+    handleMessageChange(event) {
+        this.setState({
+            message: event.target.value
+        })
+    }
+
+    appendMessage() {
+        addEvent(this.props.spec.id, this.state.message);
+        this.setState({
+            message: '',
+        })
+    }
+
     render() {
         let specDisplay = null;
         if (this.props.spec) {
-
-            const worksheets = Object.keys(this.props.spec.worksheets).map(wks => (
-                <tr key={wks}>
-                    <td>
-                        <span>{wks}</span>
-                    </td>
-                    <td>
-                        <WithStatusClass key={wks} status={this.props.spec.worksheets[wks].status}>
-                            <span>{this.props.spec.worksheets[wks].status}</span>
-                        </WithStatusClass>
-                    </td>
-                    <td>
-                        <button onClick={() => this.updateSpecWKS(wks, statusTypes.watch)}>Watch</button>
-                        <button onClick={() => this.updateSpecWKS(wks, statusTypes.resolved)}>Resolve</button>
-                    </td>
-                </tr>
-            ))
             specDisplay = (
                 <Aux>
                     <AccessionNum specID={this.props.spec.id}></AccessionNum>
                     <br></br>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>
-                                    Worksheet
-                            </th>
-                                <th>
-                                    Status
-                            </th>
-                                <th>
-                                    Notes
-                            </th>
-                            </tr>
-                            {worksheets}
-                        </tbody>
-                    </table>
+                    <WorksheetTable worksheets={this.props.spec.worksheets}></WorksheetTable>
                     <div className={classes.HistoryContainer}>
-                        <SpecHistory history={this.props.spec.history}></SpecHistory>
+                        <SpecEvents 
+                            messageText={this.state.message}
+                            changeHandler={this.handleMessageChange} 
+                            submitMessage={this.appendMessage} 
+                            history={this.props.spec.history}>
+                        </SpecEvents>
                     </div>
                 </Aux>
             )

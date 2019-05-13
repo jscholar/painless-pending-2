@@ -1,10 +1,14 @@
 .History {
     background-color: white;
-    height: 400px;
+    height: 350px;
     width: auto;
     margin: 20px;
     padding: 20px;
     overflow-y: scroll;
+}
+
+.NewMessage {
+    width: 80%;
 }
 
 .Event {

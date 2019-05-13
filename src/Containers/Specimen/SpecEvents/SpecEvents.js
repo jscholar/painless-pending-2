@@ -1,8 +1,8 @@
 import React from 'react';
 
-import classes from './SpecHistory.module.css'
+import classes from './SpecEvents.module.css'
 
-const SpecHistory = (props) => {
+const SpecEvents = (props) => {
     let events = null;
     if (props.history) {
         events = Object.keys(props.history).reverse().map((event) => {
@@ -16,9 +16,17 @@ const SpecHistory = (props) => {
     }
     return (
         <div className={classes.History}>
+            <textarea 
+                onChange={props.changeHandler} 
+                value={props.messageText} 
+                className={classes.NewMessage}>
+            </textarea>
+            <button onClick={props.submitMessage}>
+                Submit
+            </button>
             {events}
         </div>
     )
 }
 
-export default SpecHistory;
+export default SpecEvents;
