@@ -28,7 +28,7 @@ class Specimen extends React.Component {
     }
 
     shouldComponentUpdate(nextProps) {
-        if (!nextProps.location.search) return false;
+        if (!nextProps.spec) return false;
         return true;
     }
 
