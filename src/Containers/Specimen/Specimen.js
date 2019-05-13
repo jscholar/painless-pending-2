@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Aux from '../../hoc/Auxilliary/Auxilliary';
 import { fetchSpec, updateStatus, addEvent } from '../../Database/database';
-import statusTypes from './../../Constants/STATUS_TYPES';
 
 import AccessionNum from './AccessionNum/AccessionNum';
 import SpecEvents from './SpecEvents/SpecEvents';
@@ -21,6 +20,7 @@ class Specimen extends React.Component {
         this.getSpecQuery = this.getSpecQuery.bind(this);
         this.appendMessage = this.appendMessage.bind(this);
         this.handleMessageChange = this.handleMessageChange.bind(this);
+        this.updateSpecWKS = this.updateSpecWKS.bind(this);
     }
 
     componentDidMount() {
@@ -69,7 +69,10 @@ class Specimen extends React.Component {
                 <Aux>
                     <AccessionNum specID={this.props.spec.id}></AccessionNum>
                     <br></br>
-                    <WorksheetTable worksheets={this.props.spec.worksheets}></WorksheetTable>
+                    <WorksheetTable 
+                        updateSpecWKS={this.updateSpecWKS}
+                        worksheets={this.props.spec.worksheets}>
+                    </WorksheetTable>
                     <div className={classes.HistoryContainer}>
                         <SpecEvents 
                             messageText={this.state.message}
