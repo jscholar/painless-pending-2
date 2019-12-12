@@ -3,6 +3,10 @@ import Aux from './../Auxilliary/Auxilliary';
 
 import classes from './Status.module.css'
 
+/**
+ * Wraps React Components and stylizes the component
+ * with specified css classes.
+ */
 const WithStatusClass = (props) => {
     let statusClass = classes.Status
     switch(props.status) {
